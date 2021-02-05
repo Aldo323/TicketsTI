@@ -1,0 +1,144 @@
+﻿@model BlackSys.Models.LoginViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login V18</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="~/Scripts/images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Scripts/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Scripts/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Scripts/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Scripts/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Scripts/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Scripts/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Scripts/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Scripts/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Scripts/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/Scripts/css/main.css">
+    <!--===============================================================================================-->
+</head>
+<style>
+    #cr {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+</style>
+
+<body style="background-color: #666666;">
+
+    <div class="limiter">
+
+        <div class="container-login100">
+            <div class="wrap-login100">
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "login100-form validate-form", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger text-title" })
+
+                    <img class="brand-img" src="~/Scripts/images/bdesk.png" id="cr">
+                    <span class="login100-form-title p-b-43">
+
+                    </span>
+                    <span class="login100-form-title p-b-43">
+
+                    </span>
+
+
+                    <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "input100" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger text-title" })
+                        <span class="focus-input100"></span>
+                        <span class="label-input100">Email</span>
+                    </div>
+
+
+                    <div class="wrap-input100 validate-input" data-validate="Password is required">
+                        @Html.PasswordFor(m => m.Password, new { @class = "input100" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger text-title" })
+                        <span class="focus-input100"></span>
+                        <span class="label-input100">Password</span>
+                    </div>
+
+                    <div class="flex-sb-m w-full p-t-3 p-b-32">
+                        <div class="contact100-form-checkbox">
+                            <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                            <label class="label-checkbox100" for="ckb1">
+                                Remember me
+                            </label>
+                        </div>
+
+                        <div>
+                            <a href="/Demo/Account/Register" class="txt1">
+                                Registrate!
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <div class="container-login100-form-btn">
+                        <button class="login100-form-btn">
+                            Login
+                        </button>
+                    </div>
+
+                    <div class="text-center p-t-46 p-b-20">
+                        <span class="txt2">
+                            or sign up using
+                        </span>
+                    </div>
+
+                    <div class="login100-form-social flex-c-m">
+                        <a href="#" class="login100-form-social-item flex-c-m bg1 m-r-5">
+                            <i class="fa fa-facebook-f" aria-hidden="true"></i>
+                        </a>
+
+                        <a href="#" class="login100-form-social-item flex-c-m bg2 m-r-5">
+                            <i class="fa fa-twitter" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                }
+                <div class="login100-more" style="background-image: url('Scripts/images/1c.jpg');">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--===============================================================================================-->
+    <script src="~/Scripts/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Scripts/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Scripts/vendor/bootstrap/js/popper.js"></script>
+    <script src="~/Scripts/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Scripts/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Scripts/vendor/daterangepicker/moment.min.js"></script>
+    <script src="~/Scripts/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Scripts/vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Scripts/js/main.js"></script>
+
+</body>
+
+</html>

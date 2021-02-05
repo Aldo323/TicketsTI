@@ -1,0 +1,142 @@
+﻿@{
+    ViewBag.Title = "Graficas";
+    Layout = "~/Views/Shared/_Layout_Dashboard.cshtml";
+}
+
+@section Section{
+         
+         
+             <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <a href="@Url.Action("Abierto", "Home")"><div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Abiertos
+                      </a>
+                      </div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><div id="t_a"></div></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+               <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Sin Categorizar</div>
+                       <a href="@Url.Action("NC", "Home")"><div class="h5 mb-0 font-weight-bold text-gray-800"><div id="t_nc"></div></div></a>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+             <div class="col-xl-3 col-md-6 mb-4">
+               <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Cerrados</div>
+                        <a href="@Url.Action("Cerrado", "Home")"><div class="h5 mb-0 font-weight-bold text-gray-800"><div id="t_c"></div></div></a>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+               <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Vencidos</div>
+                        <a href="@Url.Action("Vencido", "Home")"><div class="h5 mb-0 font-weight-bold text-gray-800"><div id="t_v"></div></div></a>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Tickets asignados</div>
+                        <a href="@Url.Action("Asignado", "Home")"><div class="h5 mb-0 font-weight-bold text-gray-800"><div id="t_own"></div></div></a>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-xl-3 col-md-6 mb-4">
+               <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Agentes</div>
+                        <a href="@Url.Action("Agente", "Home")"><div class="h5 mb-0 font-weight-bold text-gray-800"><div id="t_agente"></div></div></a>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+           <script type="text/javascript">
+        $(function () {
+
+       $.ajax({
+                    url: "@System.Configuration.ConfigurationManager.AppSettings["Request_Full"]/api/Graph",
+                    success: function (data) {
+
+                      //  graficoData(data);
+                          t_a.innerHTML = data.abierto;
+                          t_nc.innerHTML = data.nc;
+                          t_c.innerHTML = data.cerrado;
+                          t_v.innerHTML = data.vencidos;
+                    }
+                });
+
+                $.ajax({
+                    url: "@System.Configuration.ConfigurationManager.AppSettings["Request_Full"]/api/My",
+                success: function (data) {
+
+                    //  graficoData(data);
+                    t_own.innerHTML = data.own;
+                    owner = data.own;
+                }
+        });
+
+        $.ajax({
+            url: "@System.Configuration.ConfigurationManager.AppSettings["Request_Full"]/api/agentes",
+            success: function (data) {
+                t_agente.innerHTML = data.contact;
+                owner = data.contact;
+               
+            }
+        });
+
+        });
+        </script>
+    }
+      

@@ -1,0 +1,160 @@
+﻿@model IEnumerable<BlackSys.Models.Component>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ComponentCategory.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer.CreatedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Supplier.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnitMeasure.Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CountryOfOrigin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SupplierCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PurchasingPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PurchasingTerms)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ListPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HtsID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SacID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DiscontinuedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModifiedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModifiedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.rowguid)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ComponentCategory.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.CreatedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Supplier.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UnitMeasure.Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CustomerCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CountryOfOrigin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SupplierCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PurchasingPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PurchasingTerms)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ListPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HtsID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SacID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DiscontinuedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreationDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModifiedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModifiedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.rowguid)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ComponentID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ComponentID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ComponentID })
+        </td>
+    </tr>
+}
+
+</table>

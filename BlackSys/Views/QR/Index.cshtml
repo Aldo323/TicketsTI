@@ -1,0 +1,37 @@
+﻿@model BlackSys.Models.QR
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Index", "QR", FormMethod.Post))
+{
+<div class="form-body">
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary("", new { @class = "text-error" })
+
+
+    <div class="form-group  margin-top-20">
+
+        <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(m => m.cantidad, new { @class = "col-md-2 control-label" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.cantidad, new { @class = "form-control", required = "required", @type = "number" })
+                <div class="form-control-focus"> </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-actions">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-10">
+                @*@Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-default" })*@
+                <input type="submit" class="btn btn-primary" value="Guardar" />
+            </div>
+        </div>
+    </div>
+
+</div>
+}

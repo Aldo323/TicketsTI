@@ -1,0 +1,200 @@
+﻿@{
+    ViewBag.Title = "Graficas";
+    Layout = "~/Views/Shared/_Layout_Dashboard.cshtml";
+}
+<br />
+<br />
+
+
+<head>
+    <link href="~/Scripts/custom.min.css" rel="stylesheet" type="text/css" />
+</head>
+<style>
+
+    input::placeholder {
+        font-size: 1.5em;
+    }
+
+    input {
+        color: black;
+        font-size: 1.5em;
+        border-radius: 6px !important;
+    }
+
+    #soli {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 9px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        padding-left: 3px;
+        border-left-width: 2px;
+        margin-left: 10px;
+        width: 140px;
+    }
+
+
+    #soli {
+        border-radius: 6px !important;
+    }
+</style>
+<body>
+
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>idSolicitud</th>
+                <th>Asunto</th>
+            </tr>
+        </thead>
+    </table>
+
+    <div id="Graficos" class="row">
+        @using (Html.BeginForm("Create", "Engineering", FormMethod.Get))
+        {
+            @Html.AntiForgeryToken()
+
+            <button id="soli" type="submit">Nueva Solicitud</button>
+            @*<input class="btn btn-primary btn-lg" class="btn btn-primary btn-lg" style="padding-bottom: 14px;border-bottom-width: 1px;padding-left: 16px;width: 113px;" type="submit" value="Solicitud" />*@
+        }
+
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="tile-stats">
+                <div class="icon">
+                    <i class="fa fa-check-circle"></i>
+                </div>
+
+                <div class="count">
+                    <div id="abierto"></div>
+                </div>
+
+                <a href="@Url.Action("Abierto", "Home")"><h3>Abiertos</h3></a>
+            </div>
+        </div>
+
+
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="tile-stats">
+                <div class="icon">
+                    <i class="fa fa-quote-right"></i>
+                </div>
+                <div class="count">
+                    <div id="noc"></div>
+                </div>
+                <a href="@Url.Action("NC", "Home")"><h3>Sin Categorizar</h3></a>
+            </div>
+        </div>
+
+
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="tile-stats">
+                <div class="icon">
+                    <i class="fa fa-times-circle"></i>
+
+                </div>
+                <div class="count">
+                    <div id="cerrado"></div>
+                </div>
+                <a href="@Url.Action("Cerrado", "Home")"><h3>Cerrados</h3></a>
+            </div>
+        </div>
+
+
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="tile-stats">
+                <div class="icon">
+                    <i class="fa fa-hourglass"></i>
+                </div>
+                <div class="count">
+                    <div id="ven"></div>
+                </div>
+                <a href="@Url.Action("Vencido", "Home")"> <h3>Vencidos</h3></a>
+            </div>
+        </div>
+    </div>
+</body>
+<!-- DONUT CHART BLOCK -->
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="~/Scripts/assets/js/dash-charts.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#example").hide();
+        function myFunction() {
+            // console.log("myfunction")
+            var input = $("#search_text").val();
+            console.log(input);
+            Tabla(input);
+
+        }
+
+        $('#search_text').keyup(function () {
+            var txt = $(this).val();
+            if (txt == "" || txt == null) {
+                $("#example").hide();
+                $("#result").hide();
+                $("#Graficos").show();
+                $("#example_wrapper").hide();
+            } else {
+                //$('#result').html('');
+                Tabla(txt);
+                $("#Graficos").hide();
+                $("#result").show();
+                $("#example").show();
+
+            }
+        });
+
+/*** First Chart in Dashboard page ***/
+
+	$(document).ready(function() {
+
+                $.ajax({
+                    url: "@System.Configuration.ConfigurationManager.AppSettings["Request_Full"]/api/DashClient",
+                    success: function (data) {
+
+                      //  graficoData(data);
+                        cerrado.innerHTML = data.cerrado;
+                        abierto.innerHTML = data.abiertos;
+                        noc.innerHTML = data.nc;
+                        ven.innerHTML = data.vencidos;
+                   
+                    }
+                });
+
+	});
+
+
+        function Tabla(txt) {
+
+            var table = $('#example').DataTable({
+                "ajax": {
+                    "url": "@System.Configuration.ConfigurationManager.AppSettings["Request_Full"]/api/Busqueda?search=" + txt + "",
+                    "dataType": "json",
+                    "contentType": "application/json; charset=utf-8",
+                    "error": function (status) {
+                        console.log("error");
+                    }
+                },
+                "processing": true,
+                "destroy": true,
+                "paging": "true",
+                "dataSrc": "",
+                "columns": [
+                    { "data": "idSolicitud" },
+                    { "data": "Asunto" }
+                ],
+                "order": [[1, 'asc']],
+            });
+
+            // table.reload();
+
+        }
+    });
+
+</script>

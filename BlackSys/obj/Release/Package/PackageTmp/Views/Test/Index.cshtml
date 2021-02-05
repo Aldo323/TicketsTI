@@ -1,0 +1,47 @@
+﻿@model BlackSys.Models.Images
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Hariti Study Hub</h1>
+<h4>Display Images From Server Folder in Asp.Net MVC</h4>
+<div>
+    @foreach (var imgfile in ViewBag.imagearray)
+    {
+
+        <img height="100" width="100" src="~/images/@Path.GetFileName(imgfile)" />
+        <br />
+    }
+
+    @using (Html.BeginForm("Add", "Test", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Image</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" name="ImageFile">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+</div>

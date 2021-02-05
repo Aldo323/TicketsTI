@@ -1,0 +1,269 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #poster {
+        font-family: Impact;
+        font-size: 20pt;
+        color: red;
+    }
+</style>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" />
+
+
+<table id="example" class="table table-striped table-bordered table-hover dt-responsive" style="width:100%">
+    @*<button type="button" class="btn btn-default btn-sm" id="refresh_desk">
+            <span class="glyphicon glyphicon-refresh"></span> Refresh
+        </button>*@
+    <thead>
+        <tr>
+            <th>Ticket</th>
+            <th>Correo</th>
+            <th>SubActivo</th>
+            <th>Activo</th>
+            <th>Fecha</th>
+            <th>Prioridad</th>
+            <th>Departamento</th>
+            <th>Telefono</th>
+            <th>Estatus</th>
+           
+            <th>Ubicacion</th>
+            <th>Responsable</th>
+            <th>SLA Cat. Alta</th>
+            <th>SLA Cat. Media</th>
+            <th>SLA Cat. Baja</th>
+            <th>Vencimiento</th>
+            <th>Conclusion</th>
+            <th>Seguimiento</th>
+            <th>Editar</th>
+        </tr>
+    </thead>
+</table>
+
+<table id="example1" class="table table-striped table-bordered table-hover dt-responsive" style="width:100%">
+    @*<button type="button" class="btn btn-default btn-sm" id="refresh_desk">
+            <span class="glyphicon glyphicon-refresh"></span> Refresh
+        </button>*@
+    <thead>
+        <tr>
+            <th>Ticket</th>
+            <th>Correo</th>
+            <th>SubActivo</th>
+            <th>Activo</th>
+            <th>Fecha</th>
+            <th>Prioridad</th>
+            <th>Departamento</th>
+            <th>Telefono</th>
+            <th>Estatus</th>
+            
+            <th>Ubicacion</th>
+            <th>Responsable</th>
+            <th>SLA Cat. Alta</th>
+            <th>SLA Cat. Media</th>
+            <th>SLA Cat. Baja</th>
+            <th>Vencimiento</th>
+            <th>Conclusion</th>
+            <th>Seguimiento</th>
+        </tr>
+    </thead>
+</table>
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $.ajax({
+            url: '@System.Configuration.ConfigurationManager.AppSettings["Request"]/api/User',
+            success: function (data) {
+                if (data.roles == "Sistemas") {
+                    var tablaUser = $('#example1');
+                    tablaUser.css("display", "none");
+                    Tabla_Adm();
+                }
+                else {
+                    var tablaAdmin = $('#example');
+                    tablaAdmin.css("display", "none");
+                    Tabla();
+                }
+            }
+        });
+
+        function Tabla() {
+            var table = $('#example1').DataTable({
+                "ajax": {
+                    "url": "@System.Configuration.ConfigurationManager.AppSettings["Request"]/api/close",
+
+                    "datatype": "json",
+                    "contentType": "application/json; charset=utf-8",
+
+                    "error": function (status) {
+                        console.log(status);
+                    }
+                },
+                "processing": true,
+                "dataSrc": "",
+                "columns": [
+
+                    { "data": "IdSolicitud" },
+
+                    { "data": "Correo" },
+
+                    { "data": "Subactivo" },
+                    { "data": "Activo" },
+                    { "data": "Fecha_levantamiento" },
+                    {
+                        "data": "Categoria",
+                        "render": function (dato, type, val) {
+                            switch (dato) {
+                                case "ALTA":
+                                    return '<img src="https://docs.google.com/drawings/d/e/2PACX-1vRJxSjgCjMTKSwLU4ZGf5TiGXwSv2UgxFD7AmIPmXUwGZt54n6YV-peSxo5RJarm6m94H0wQcuzoatQ/pub?w=88&h=48"><p><font color="white"; size="1"></font></p>';
+                                case "MEDIA":
+                                    return '<img src="https://docs.google.com/drawings/d/e/2PACX-1vSQ9IDrjlGsxZi7Ip-wWpBXugAT3i_UQVcNBAIQHGrH5tNfCCfp1p0uWDC12Ov7IHoSGBkC2UvVEYBg/pub?w=88&h=48"><p><font color="white"; size="1"></font></p>';
+                                case "BAJA":
+                                    return '<img src="https://docs.google.com/drawings/d/e/2PACX-1vTILxaC3QLM4lmWYeIZkdMcEfw8C4oowEjLTlKUCgFPqw912j_HQjuDgP_3TOEkkFyWeVHzp07EZP_E/pub?w=92&amp;h=52"><p><font color="white"; size="1"></font></p>';
+                                default:
+                                    return '';
+                            }
+                        },
+                    },
+                    { "data": "Departamento" },
+                    { "data": "Telefono" },
+                    {
+                        "data": "Estatus",
+                        "render": function (data, type, val) {
+                            switch (data) {
+                                case "ABIERTO":
+                                    return '<p id="poster">ABIERTO</p>';
+                                case "CERRADO":
+                                    return '<font color="red"><p style="font-family: Impact;color="red"; font-size:14pt;">CERRADO</p><font>';
+                                case "N.C":
+                                    return '<font color="BLUE"><p style="font-family: Impact; color="blue" font-size:14pt;">N.C</p><font>';
+                                default:
+                                    return '' + data + '';
+                            }
+                        }
+                    },
+                   
+                    { "data": "Ubicacion" },
+                    { "data": "Responsable" },
+                    { "data": "SLA_C_A" },
+                    { "data": "SLA_C_M" },
+                    { "data": "SLA_C_B" },
+                    { "data": "Fecha_Vencimiento" },
+                    { "data": "Conclusion" },
+                    {
+                        "data": "IdSolicitud", "width": "50px",
+                        "render": function (data) {
+                            return '<a  href="@System.Configuration.ConfigurationManager.AppSettings["Request"]/Engineering/EditAbierto/' + data + '">Edit</a>';
+                        }
+                    }
+
+                ],
+                "order": [[1, 'asc']],
+            });
+            $('#refresh_desk').click(function () {
+                table.ajax.reload();
+            });
+
+        }
+
+        function Tabla_Adm() {
+            var table = $('#example').DataTable({
+                "ajax": {
+                    "url": "@System.Configuration.ConfigurationManager.AppSettings["Request"]/api/close",
+
+                    "datatype": "json",
+                    "contentType": "application/json; charset=utf-8",
+
+                    "error": function (status) {
+                        console.log(status);
+                    }
+                },
+                "processing": true,
+                "dataSrc": "",
+                "columns": [
+
+                    { "data": "IdSolicitud" },
+
+                    { "data": "Correo" },
+
+                    { "data": "Subactivo" },
+                    { "data": "Activo" },
+                    { "data": "Fecha_levantamiento" },
+                    {
+                        "data": "Categoria",
+                        "render": function (dato, type, val) {
+                            switch (dato) {
+                                case "ALTA":
+                                    return '<img src="https://docs.google.com/drawings/d/e/2PACX-1vRJxSjgCjMTKSwLU4ZGf5TiGXwSv2UgxFD7AmIPmXUwGZt54n6YV-peSxo5RJarm6m94H0wQcuzoatQ/pub?w=88&h=48"><p><font color="white"; size="1"></font></p>';
+                                case "MEDIA":
+                                    return '<img src="https://docs.google.com/drawings/d/e/2PACX-1vSQ9IDrjlGsxZi7Ip-wWpBXugAT3i_UQVcNBAIQHGrH5tNfCCfp1p0uWDC12Ov7IHoSGBkC2UvVEYBg/pub?w=88&h=48"><p><font color="white"; size="1"></font></p>';
+                                case "BAJA":
+                                    return '<img src="https://docs.google.com/drawings/d/e/2PACX-1vTILxaC3QLM4lmWYeIZkdMcEfw8C4oowEjLTlKUCgFPqw912j_HQjuDgP_3TOEkkFyWeVHzp07EZP_E/pub?w=92&amp;h=52"><p><font color="white"; size="1"></font></p>';
+                                default:
+                                    return '';
+                            }
+                        },
+                    },
+                    { "data": "Departamento" },
+                    { "data": "Telefono" },
+                    {
+                        "data": "Estatus",
+                        "render": function (data, type, val) {
+                            switch (data) {
+                                case "ABIERTO":
+                                    return '<p id="poster">ABIERTO</p>';
+                                case "CERRADO":
+                                    return '<p id="poster">CERRADO</p>';
+                                case "N.C":
+                                    return '<p id="poster">N.C</p>';
+                                default:
+                                    return '' + data + '';
+                            }
+                        }
+                    },
+                   
+                    { "data": "Ubicacion" },
+                    { "data": "Responsable" },
+                    { "data": "SLA_C_A" },
+                    { "data": "SLA_C_M" },
+                    { "data": "SLA_C_B" },
+                    { "data": "Fecha_Vencimiento" },
+                    { "data": "Conclusion"},
+
+                    {
+                        "data": "IdSolicitud", "width": "50px",
+                        "render": function (data) {
+                            return '<a  href="@System.Configuration.ConfigurationManager.AppSettings["Request"]/Mensajes/Create/' + data + '">Seguimiento</a>';
+                        }
+                    },
+                    {
+                        "data": "IdSolicitud", "width": "50px",
+                        "render": function (data) {
+                            return '<a  href="@System.Configuration.ConfigurationManager.AppSettings["Request"]/Engineering/EditCerrado/' + data + '">Edit</a>';
+                        }
+                    }
+                ],
+                "order": [[1, 'asc']],
+            });
+            $('#refresh_desk').click(function () {
+                table.ajax.reload();
+            });
+
+        }
+
+        $('.tablecontainer').on('click', 'a.popup', function (e) {
+            e.preventDefault();
+            OpenPopup($(this).attr('href'));
+        })
+
+
+    });
+
+
+</script>

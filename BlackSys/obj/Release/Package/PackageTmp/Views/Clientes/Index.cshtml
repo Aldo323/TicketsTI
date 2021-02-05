@@ -1,0 +1,41 @@
+﻿@model IEnumerable<BlackSys.Models.Cliente>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre_user)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Img_user)
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre_user)
+            </td>
+            <td>
+
+                <img width="50" height="50" src="@Url.Action("convertirImagen", "Clientes", new {Id_user = item.Id_user})" />
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Editar_Imagen", new { id = item.Id_user })
+            </td>
+            @*<td>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id_user })
+                </td>*@
+        </tr>
+    }
+
+</table>
+<script src="/Scripts/respond.js"></script>

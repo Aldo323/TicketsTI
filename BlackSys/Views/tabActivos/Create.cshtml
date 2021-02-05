@@ -1,0 +1,282 @@
+﻿@model BlackSys.Models.tab_Activos
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/froala_editor.css" rel="stylesheet" />
+<link href="~/Content/froala_page.css" rel="stylesheet" />
+<link href="~/Content/themes/dark.css" rel="stylesheet" />
+<style type="text/css">
+
+    .froala-element {
+        font-size: 9pt;
+    }
+      #Codigo {
+        display: none;
+    }
+    #idCategoria {
+        display: none;
+    }
+</style>
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "tabActivos", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+
+    
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    
+     List<SelectListItem> listItems = new List<SelectListItem>();
+
+    listItems.Add(new SelectListItem
+    {
+        Text = "BUENO",
+        Selected = true
+
+
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "REGULAR",
+        Value = "REGULAR"
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "MALO",
+        Value = "MALO",
+
+    });
+
+    List<SelectListItem> Asignadolist = new List<SelectListItem>();
+
+    Asignadolist.Add(new SelectListItem
+    {
+        Text = "SI",
+        Selected = true
+
+
+    });
+    Asignadolist.Add(new SelectListItem
+    {
+        Text = "NO",
+        Value = "NO"
+    });
+
+    <div class="form-horizontal">
+        <h4>tab_Activos</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IdActivo)
+
+  
+        <div class="form-group">
+
+            @Html.LabelFor(model => model.Codigo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.Codigo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+      <div class="form-group">
+        @Html.Label("Categoria", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.No_Categoria, ViewBag.ActivoList as SelectList, "Select Activo", new { id = "dd_Activos", @class = "form-control", required = "required" })
+        </div>
+
+    </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.idCategoria, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", visible = "false" } })
+                @Html.ValidationMessageFor(model => model.idCategoria, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Estado, listItems, new { @class = "form-control", })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Asignado, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.Asignado, new { @checked = "checked" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Re_Asignable, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.Re_Asignable, new { @checked = "checked" })
+                @Html.ValidationMessageFor(model => model.Re_Asignable, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ubicado, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Ubicado, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Ubicado, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Marca, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Marca, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Marca, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.No_Serial, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.No_Serial, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.ValidationMessageFor(model => model.No_Serial, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UsuarioAsig, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UsuarioAsig, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UsuarioAsig, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nombre_Activo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nombre_Activo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nombre_Activo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Modelo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Modelo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Modelo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Caracteristicas, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Caracteristicas, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Caracteristicas, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Cambiar Imagen", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*<input type="file" name="imagenCliente" />*@
+                <input type="file" name="ImageFile" id="imagen">
+            </div>
+        </div>
+	
+	 <div class="form-group">
+        @Html.LabelFor(model => model.Notas, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Notas)
+            @Html.ValidationMessageFor(model => model.Notas)
+        </div>
+    </div>
+
+  
+    
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+   <script>
+        $(document).ready(function () {
+            function removeAllTagsAndTrim(html) {
+                return !html ? "" : jQuery.trim(html.replace(/(<([^>]+)>)/ig, ""));
+            }
+
+
+            jQuery.validator.setDefaults({ ignore: ":hidden:not(textarea)" });
+
+
+            jQuery.validator.methods.originalRequired = jQuery.validator.methods.required;
+
+            jQuery.validator.addMethod("required", function (value, element, param) {
+                value = removeAllTagsAndTrim(value);
+                if (!value) {
+                    $(".froala-element").focus();
+                    $(".froala-element").css({ "border-color": "red" });
+                    return false;
+                }
+
+                return jQuery.validator.methods.originalRequired.call(this, value, element, param);
+            }, jQuery.validator.messages.required);
+        });
+    </script>
+
+   @section Scripts {
+       
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
+        <script src="~/Scripts/froala_editor.min.js"></script>
+        <script src="~/Scripts/langs/fa.js"></script>
+        <script src="~/Scripts/plugins/block_styles.min.js"></script>
+        <script src="~/Scripts/plugins/file_upload.min.js"></script>
+        <script src="~/Scripts/plugins/lists.min.js"></script>
+        <script src="~/Scripts/plugins/media_manager.min.js"></script>
+        <script src="~/Scripts/plugins/tables.min.js"></script>
+        <script src="~/Scripts/plugins/video.min.js"></script>
+
+    }
+	
+	    <script type="text/javascript">
+                $(function () {
+            $('#Notas').editable({
+                buttons: ["bold", "italic", "fontFamily",
+                    "fontSize", "color", "formatBlock", "align", "insertOrderedList",
+                    "insertUnorderedList", "outdent", "indent", "selectAll", "uploadFile",
+                    "insertImage", "insertVideo", "undo", "redo", "html", "save", "inserthorizontalrule"],
+                inlineMode: false,
+                inverseSkin: true,
+                preloaderSrc: '@Url.Content("~/Content/img/preloader.gif")',
+                allowedImageTypes: ["jpeg", "jpg", "png"],
+                height: 300,
+                language: "es",
+
+                fontList: ["Tahoma, Geneva", "Arial, Helvetica", "Impact, Charcoal"],
+                autosave: true,
+                autosaveInterval: 2500,
+                saveURL: '@Url.Action("FroalaAutoSave", "tabActivos")',
+                saveParams: { postId: "123" },
+                spellcheck: true,
+                plainPaste: true,
+                imageButtons: ["removeImage", "replaceImage", "linkImage"],
+                borderColor: '#00008b',
+                imageUploadURL: '@Url.Action("FroalaUploadImage", "tabActivos")',
+                imageParams: { postId: "123" },
+                enableScript: false,
+                fileUploadURL: '@Url.Action("FroalaUploadFile", "tabActivos")',
+                fileUploadParams: { postId: "123" }
+            });
+        });
+    </script>
+	</div>
+}
+
+
+
+
+ IEnumerable<RangoFechas> Informe = db.Database.SqlQuery<RangoFechas>("sp_New_Activo  @No_Categoria = '" + tab_Activos.No_Categoria+
+ "', @Estado = '" + tab_Activos.Estado + "', @Asignado = '" + tab_Activos.Asignado + "', @Re_Asignable = '" + tab_Activos.Re_Asignable + "', @Ubicado = '" + tab_Activos.Ubicado +
+ "', @Marca = '" + tab_Activos.Marca + "', @No_Serial = '" + tab_Activos.No_Serial + "', @UsuarioAsig = '" + tab_Activos.UsuarioAsig + "', @Nombre_Activo = '" + tab_Activos.Nombre_Activo +
+ "', @Modelo = '" + tab_Activos.Modelo + "', @Caracteristicas = '" + tab_Activos.Caracteristicas + "', @Notas = '" + tab_Activos.Notas + "', @ImagePathActivo = '" + tab_Activos.ImagePathActivo + "'").ToList();

@@ -1,0 +1,77 @@
+﻿@using Microsoft.AspNet.Identity
+
+
+@if (Request.IsAuthenticated)
+{
+
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+    {
+
+        @Html.AntiForgeryToken()
+        string nombre = @User.Identity.GetUserName().ToString();
+
+<li class="dropdown dropdown-user">
+    <div style="position:absolute;" class="noti-content">
+        <div   class="noti-top-arrow"></div>
+        <ul  id="notiContent"></ul>
+    </div>
+    <span class="noti glyphicon glyphicon-bell" id="bell"><span class="count"></span></span>
+    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+        <img id="userpicturec" width="40" height="40" class="img-circle" src="@Url.Action("PathUser", "Clientes", new {nombre =  @User.Identity.GetUserName().ToString()})" />
+
+        <span class="username username-hide-on-mobile"> @User.Identity.GetUserName() </span>
+
+        <i class="fa fa-angle-down"></i>
+    </a>
+
+
+    <ul class="dropdown-menu dropdown-menu-default">
+        <li>
+            <a href="/clientes/Index">
+                <i class="icon-user"></i> My Profile
+            </a>
+        </li>
+        <li>
+            <a href="javascript:document.getElementById('logoutForm').submit()">
+                <i class="icon-key"></i> Log Out
+            </a>
+        </li>
+    </ul>
+
+</li>
+        
+    }
+}
+else
+{
+    <!--
+        <li class="dropdown dropdown-user">@*Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })*@</li>
+    -->
+    <li class="dropdown dropdown-user">@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+}
+
+
+
+<script>
+
+
+            //$(document).ready(function () {
+            //    var nombre = 'aldo.mor3@intelexion.com'
+            //    $.ajax({
+
+            //        url: '/api/perfiles?gard=' + nombre + '',
+            //        success: function (data) {
+            //            for (var i = 0; i < data.length; i++) {
+
+            //                console.log(data[i].ImagePath);
+            //                    var h5 = document.getElementById("perfil");
+
+            //                        h5.innerHTML +='<img width="40" height="40" class="img-circle" src="' + data[i].ImagePath + '"/>'
+
+
+            //            }
+            //        }
+            //    });
+            //});
+
+</script>

@@ -1,0 +1,17 @@
+﻿@using BlackSys.Models;
+@{
+    ViewBag.Title = "Codigos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #m {
+        border: 1px solid black !important;
+    }
+</style>
+<p><button onclick="javascript:window.print()" class="btn-print">Print</button></p>
+@foreach (QR customer in (List<QR>)ViewBag.Customers)
+{
+    
+    <img src="@System.Configuration.ConfigurationManager.AppSettings["QRinventario"]@customer.idu" id="m" style="max-width:100px; max-height:100px;">
+
+}

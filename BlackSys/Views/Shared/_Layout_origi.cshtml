@@ -1,0 +1,121 @@
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
+<html>
+<head>
+   
+    @Scripts.Render("~/bundles/jquery")
+</head>
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
+
+
+                @RenderBody()
+
+    <script src="~/Scripts/jquery.signalR-2.4.1.js"></script>
+    <script src="@System.Configuration.ConfigurationManager.AppSettings["Request"]/signalr/hubs"></script>
+
+    <script type="text/javascript">
+        $(function () {
+             var msg = '@TempData["ResultMessage"]';
+             var msgType = '@TempData["ResultType"]';
+             showNotification(msg, msgType);
+
+
+            // Click on notification icon for show notification
+            $('span.noti').click(function (e) {
+                e.stopPropagation();
+                $('.noti-content').show();
+                var count = 0;
+                count = parseInt($('span.count').html()) || 0;
+                //only load notification if not already loaded
+               // if (count > 0) {
+                    updateNotification();
+               // }
+                $('span.count', this).html('&nbsp;');
+            })
+
+
+            // hide notifications
+            $('html').click(function () {
+                $('.noti-content').hide();
+            })
+
+
+            var notificationHub = $.connection.notificationHub;
+            // update notification
+            function updateNotification() {
+                $('#notiContent').empty();
+                $('#notiContent').append($('<li>Loading...</li>'));
+
+                $.ajax({
+                    type: 'GET',
+                    url: '@System.Configuration.ConfigurationManager.AppSettings["Bell"]/api/bellnotes',
+                    success: function (Informe) {
+                        //console.log(Informe.Informe[1].Email)
+                        //console.log(Informe.Informe.length)
+                        $('#notiContent').empty();
+                        if (Informe.length == 0) {
+                $('#notiContent').append($('<li>No data available</li>'));
+                        }
+                        var count = 0;
+                $.each(Informe, function (index, value) {
+                     for (var i = 0; i <= value.length; i++)
+                        {
+
+
+                    //$('#notiContent').append($('<li>Se ha comentado el ticket #:' + value.Informe + ''));
+
+                                                 $('#notiContent').append($('<li><a href="@System.Configuration.ConfigurationManager.AppSettings["Request"]/Mensajes/Create/' + value[i].idSolicitud + '"><b>'+ value[i].Nombre + '</b> '+ value[i].Notify +"  :" +value[i].idSolicitud+ '</a></li>'));
+                   // console.log(value.length)
+
+                     }
+                });
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    }
+                })
+            }
+
+
+            //update notification count
+            function updateNotificationCount() {
+                var count = 0;
+                count = parseInt($('span.count').html()) || 0;
+                count++;
+                $('span.count').html(count);
+            }
+            //signalr js code for start hub and send receive notification
+
+            var connec = $.hubConnection();
+
+            //$.connection.hub.on("UserConnected", function (connectionId) {
+
+            //});
+
+            var conexion = $.connection.hub.id;
+
+            $.connection.hub.start().done(function () {
+
+               
+                console.log(notificationHub.connection.id);
+                console.log('Notification hub started');
+               
+            });
+
+            notificationHub.client.displayCustomer = function () {
+                getData();
+
+            };
+
+
+            function getData() {
+                Console.log("aldo");
+
+            }
+
+        
+
+        })
+    </script>
+</body>
+</html>

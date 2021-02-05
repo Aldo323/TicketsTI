@@ -1,0 +1,186 @@
+﻿@model BlackSys.Models.Mensajes 
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Section{
+    
+     <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Tickets Sin Categorisar</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+<table id="example" class="table table-striped table-bordered table-hover dt-responsive" style="width:100%">
+    <thead>
+        <tr>
+            <th>Ticket</th>
+            <th>Correo</th>
+            <th>SubActivo</th>
+            <th>Activo</th>
+            <th>Fecha</th>
+            <th>Departamento</th>
+            <th>Telefono</th>
+            <th>Estatus</th>
+            <th>Ubicacion</th>
+            <th>SLA Cat. Alta</th>
+            <th>SLA Cat. Media</th>
+            <th>SLA Cat. Baja</th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
+</div>
+</div>
+</div>
+
+
+
+<div id="userModal" class="modal fade">
+            <div class="modal-dialog">
+                @using (Html.BeginForm("VewEdit", "Engineering", FormMethod.Post, new { @id = "Form1" }))
+                {
+                    @Html.AntiForgeryToken()
+                    
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Editar Ticket # <span id="idHolder"></span></h4>
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+
+                        </div>
+
+                        <div class="modal-body">
+                         @*   <input type="hidden" name="IdSolicitud"  id="IdSolicitud"  class="form-control" /><br>*@
+                           <input  name="IdSolicitud" id="IdSolicitud" value='@model.IdSolicitud'  class="form-control"/><br>
+                            <label>Estado</label>
+                            <br>
+                            <div class="form-group">
+
+                                <div class="col-md-10">
+                              @Html.DropDownListFor(model => model.Estado, ViewBag.EstadoList as SelectList, "Selecciona" , new { id = "dd_Activos", @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+                   
+                            <br>
+                            <br>
+                            <label>Responsable</label>
+                            <div class="form-group">
+
+                                <div class="col-md-10">
+                                  @Html.DropDownListFor(model => model.Responsable, ViewBag.RespList as SelectList, "Selecciona", new { id = "dd_Activos", @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+                      
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="course_id" id="course_id" />
+                            <input type="hidden" name="operation" id="operation" />
+                            <input type="submit" name="action" id="action" class="btn btn-primary" value="Aceptar" />
+                            <button type="button"  class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+<script>
+      $(document).ready(function () {
+ 
+       $(document).on("click", ".btn", function () {
+     var eventId = $(this).data('id');
+  $('#idHolder').html( eventId );
+
+   
+     // $('#IdSolicitud').val(""+eventId+"");
+     //$('#IdSolicitud').val( eventId );
+    // html( eventId );IdSolicitud
+});
+
+
+ $('#action').click(function () {
+               
+var t =  $('#IdSolicitud').val();
+$('#IdSolicitud').val(t);
+console.log(t)
+            })
+
+
+            var table = $('#example').DataTable({
+                "searching": true,
+                "ajax": {
+                    "url": "@System.Configuration.ConfigurationManager.AppSettings["Request"]/api/nc",
+
+                    "datatype": "json",
+                    "contentType": "application/json; charset=utf-8",
+
+                    "error": function (status) {
+                        console.log(status);
+                    }
+                },
+                "processing": true,
+                "dataSrc": "",
+                "columns": [
+
+                    { "data": "IdSolicitud" },
+
+                    { "data": "Correo" },
+
+                    { "data": "Subactivo" },
+                    { "data": "Activo" },
+                    { "data": "Fecha_levantamiento" },
+                   
+                    { "data": "Departamento" },
+                    { "data": "Telefono" },
+                    {
+                        "data": "Estatus",
+                        "render": function (data, type, val) {
+                            switch (data) {
+                                case "ABIERTO":
+                                    return '<p id="poster">ABIERTO</p>';
+                                case "CERRADO":
+                                    return '<font color="red"><p style="font-family: Impact;color="red"; font-size:14pt;">CERRADO</p><font>';
+                                case "N.C":
+                                    return '<p id="poster">N.C</p>';
+                                default:
+                                    return '' + data + '';
+                            }
+                        }
+                    },
+                   
+                    { "data": "Ubicacion" },
+                    { "data": "SLA_C_A" },
+                    { "data": "SLA_C_M" },
+                    { "data": "SLA_C_B" },
+
+                    {
+                        "data": "IdSolicitud", "width": "50px",
+                        "render": function (data) {
+                            //return '<a  href="@System.Configuration.ConfigurationManager.AppSettings["Request"]/Mensajes/Create/' + data + '">link</a>';
+                        return '<button type="button" id="add_button"  data-id="'+data+'" data-toggle="modal" data-target="#userModal" class="btn btn-success">Editar</button>'
+                           //return '<button type="button" id="add_button"  data-id="'+data+'" data-toggle="modal" data-target="#userModal" class="btn btn-success">Editar</button>'
+                        }
+                    }
+                ],
+                "order": [[1, 'asc']],
+            });
+
+
+
+            $('#refresh_desk').click(function () {
+                table.ajax.reload();
+            });
+
+        $('.tablecontainer').on('click', 'a.popup', function (e) {
+            e.preventDefault();
+            OpenPopup($(this).attr('href'));
+        })
+    });
+
+
+</script>
+}
+
+
+    
+  

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<BlackSys.Models.MenuTemp>
+@foreach (var menu in Model)
+{
+    if (menu.ParentMenuID == 0)
+    {
+<li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#@menu.DisplayName" aria-expanded="true" aria-controls="@menu.DisplayName">
+        <i class="fas fa-fw fa-wrench"></i>
+        <span>@menu.DisplayName</span>
+
+    </a>
+    <div id="@menu.DisplayName" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            @foreach (var child in Model)
+            {
+                if (child.ParentMenuID == menu.MenuID)
+                {
+
+            <div>
+                @foreach (var childx in Model)
+                {
+                    if (childx.ParentMenuID == menu.MenuID)
+                    {
+                        <a class="collapse-item" href="@childx.MenuURL">@childx.DisplayName</a>
+                    }
+
+                    
+                }
+
+            </div>
+
+                    break;
+                }
+
+            }
+        </div>
+    </div>
+
+    </li>
+    }
+}

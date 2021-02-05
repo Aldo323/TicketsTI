@@ -1,0 +1,58 @@
+﻿@model BlackSys.Models.SubActivos
+@{
+    ViewBag.Title = "Details_Subactivos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SubActivos</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Subactivos1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subactivos1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLA_C_B)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLA_C_B)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLA_C_M)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLA_C_M)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLA_C_A)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLA_C_A)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Activos.Activo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Activos.Activo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit_SubActivo", new { id = Model.IdSubactivos }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

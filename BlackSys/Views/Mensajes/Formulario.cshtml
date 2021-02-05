@@ -1,0 +1,125 @@
+﻿
+
+@*<!DOCTYPE html>
+
+<html>
+
+<body>
+
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/froala_editor.css" rel="stylesheet" />
+    <link href="~/Content/froala_page.css" rel="stylesheet" />
+    <link href="~/Content/themes/dark.css" rel="stylesheet" />
+    <h2>Seguimiento Ticket # @Session["solicitud"] </h2>
+
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
+    <script src="~/Scripts/froala_editor.min.js"></script>
+    <script src="~/Scripts/langs/fa.js"></script>
+    <script src="~/Scripts/plugins/block_styles.min.js"></script>
+    <script src="~/Scripts/plugins/colors.min.js"></script>
+    <script src="~/Scripts/plugins/file_upload.min.js"></script>
+    <script src="~/Scripts/plugins/font_family.min.js"></script>
+    <script src="~/Scripts/plugins/font_size.min.js"></script>
+    <script src="~/Scripts/plugins/lists.min.js"></script>
+    <script src="~/Scripts/plugins/media_manager.min.js"></script>
+    <script src="~/Scripts/plugins/tables.min.js"></script>
+    <script src="~/Scripts/plugins/video.min.js"></script>
+
+    @*@using (Html.BeginForm("Create", "Mensajes", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div>
+            <div>
+
+                <br />
+                <br />
+                Solicitud # @Session["solicitud"]
+                <br />
+                <br />
+                @Html.EditorFor(model => model.Id_Solicitud, new { htmlAttributes = new { @class = "form-control", @Value = Session["solicitud"], style = "display:none" } })
+                @Html.ValidationMessageFor(model => model.Id_Solicitud, "", new { @class = "text-danger" })
+
+                Usuario : @User.Identity.GetUserName()
+                @Html.EditorFor(model => model.Email_user, new { htmlAttributes = new { @class = "form-control", @Value = @User.Identity.GetUserName(), style = "display:none" } })
+                @Html.ValidationMessageFor(model => model.Email_user, "", new { @class = "text-danger" })
+                <br />
+                <br />
+                Mensaje
+                @Html.TextAreaFor(model => model.Mensaje)
+                @Html.ValidationMessageFor(model => model.Mensaje)
+                <form class="form-inline">
+
+                    <input type="submit" value="Create" class="btn btn-primary pull-right" />
+                </form>
+            </div>
+        </div>
+    }*@
+    @*<script type="text/javascript">
+     $(function () {
+         $('#Mensaje').editable({
+                buttons: ["bold", "italic", "underline", "strikeThrough", "fontFamily",
+                    "fontSize", "color", "formatBlock", "align", "insertOrderedList",
+                    "insertUnorderedList", "outdent", "indent", "selectAll", "createLink", "uploadFile",
+                    "insertImage", "insertVideo", "undo", "redo", "html", "save", "inserthorizontalrule"],
+                inlineMode: false,
+                inverseSkin: true,
+                preloaderSrc: '@Url.Content("~/Content/img/preloader.gif")',
+                allowedImageTypes: ["jpeg", "jpg", "png"],
+                height: 300,
+                language: "es",
+
+                fontList: ["Tahoma, Geneva", "Arial, Helvetica", "Impact, Charcoal"],
+                autosave: true,
+                autosaveInterval: 2500,
+                saveURL: '@Url.Action("FroalaAutoSave", "Engineering")',
+                saveParams: { postId: "123" },
+                spellcheck: true,
+                plainPaste: true,
+                imageButtons: ["removeImage", "replaceImage", "linkImage"],
+                borderColor: '#00008b',
+                imageUploadURL: '@Url.Action("FroalaUploadImage", "Engineering")',
+                imageParams: { postId: "123" },
+                enableScript: false,
+                fileUploadURL: '@Url.Action("FroalaUploadFile", "Engineering")',
+                fileUploadParams: { postId: "123" }
+            });
+        });
+    </script>*@
+
+    <script>
+        $(document).ready(function () {
+
+            var levantamiento = "";
+
+            function removeAllTagsAndTrim(html) {
+                return !html ? "" : jQuery.trim(html.replace(/(<([^>]+)>)/ig, ""));
+            }
+
+
+            jQuery.validator.setDefaults({ ignore: ":hidden:not(textarea)" });
+
+
+            jQuery.validator.methods.originalRequired = jQuery.validator.methods.required;
+
+            jQuery.validator.addMethod("required", function (value, element, param) {
+                value = removeAllTagsAndTrim(value);
+                if (!value) {
+                    $(".froala-element").focus();
+                    $(".froala-element").css({ "border-color": "red" });
+                    return false;
+                }
+
+                return jQuery.validator.methods.originalRequired.call(this, value, element, param);
+            }, jQuery.validator.messages.required);
+
+        });
+    </script>
+
+</body>
+</html>*@

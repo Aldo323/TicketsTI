@@ -1,0 +1,112 @@
+﻿@model BlackSys.Models.Perfil
+@using BlackSys.Models
+@{
+    ViewBag.Title = "Editar Usuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h3 class="page-title">
+    Administracion de Usuarios
+    <small> Security</small>
+</h3>
+@{
+    var data = (Perfil)ViewData["Message"];
+}
+<body OnLoad="LoadValue()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption font-green">
+                        <i class="icon-pin font-green"></i>
+                        <span class="caption-subject bold uppercase">Editando usuario</span>
+                    </div>
+                    <div class="actions">
+                        <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    @using (Html.BeginForm("Edit", "Perfil", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                    {
+                        <div class="form-body">
+                            @Html.AntiForgeryToken()
+
+                            <div class="alert alert-danger display-hide">
+                                <button class="close" data-close="alert"></button>@Html.ValidationSummary("", new { @class = "text-error" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("Imagen Actual", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    <img width="280" height="250" src="@Url.Action("convertirImagen", "Clientes", new { Id_user = data.Id })" />
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(m => m.Nombre, null, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(m => m.ApellidoPat, null, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.ApellidoPat, new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(m => m.Email, null, new { @class = "col-md-2 control-label", disabled = "disabled", @readonly = "readonly" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+
+
+                      
+                        </div>
+
+
+
+                        <div class="form-group">
+                            @Html.Label("Cambiar Imagen", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @*@Html.TextBoxFor(m => m.ImageFile, new {type="file", @class = "input-file" })*@
+                                <input type="file" name="ImageFile" id="imagen" />
+
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-2 col-md-10">
+                                    @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-default" })
+                                    <input type="submit" class="btn btn-primary" value="Guardar" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script language=“JavaScript”>
+
+    function LoadValue() {
+        document.getElementById("imagen").value = "TEST";
+
+    }
+
+</script>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

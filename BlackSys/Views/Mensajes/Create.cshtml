@@ -1,0 +1,492 @@
+﻿@model BlackSys.Models.Mensajes 
+@using Microsoft.AspNet.Identity
+
+
+@{
+    ViewBag.Title = "Crear Mensaje";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Section{
+
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/froala_editor.css" rel="stylesheet" />
+    <link href="~/Content/froala_page.css" rel="stylesheet" />
+    <link href="~/Content/themes/dark.css" rel="stylesheet" />
+    <style>
+        body {
+            font-size: 0.9rem;
+        }
+        /*#charts {
+            font-size: 90%;
+        }*/
+
+        #mensajes {
+            max-height: 450px;
+            overflow-y: scroll;
+        }
+
+        .chat-wrapper {
+            width: 100%;
+            display: table;
+            overflow: hidden;
+        }
+
+        .chat-message-content {
+            background-color: #91D98A;
+            border-top-color: #91D98A;
+        }
+
+        .chat-message-srd {
+            background-color: #8AC0D9;
+            border-top-color: #8AC0D9;
+            border-radius: 4px;
+        }
+
+        .chat-wrapper:before {
+            content: " ";
+            display: block;
+        }
+
+        .chat-wrapper .chat-content {
+            background-color: #fff;
+        }
+
+        .chat-wrapper .chat-image {
+            float: left;
+            border-radius: 50%;
+        }
+
+            .chat-wrapper .chat-image.chat-image-default {
+                width: 45px;
+                height: 45px;
+            }
+
+        .chat-wrapper .chat-message {
+            margin-bottom: 20px;
+            width: 100%;
+            display: table;
+            overflow: hidden;
+        }
+
+            .chat-wrapper .chat-message:before {
+                content: " ";
+                display: block;
+            }
+
+            .chat-wrapper .chat-message:last-of-type {
+                margin-bottom: 0;
+            }
+
+            .chat-wrapper .chat-message .chat-message-wrapper {
+                max-width: 70%;
+                display: table;
+                margin: 0 20px;
+                padding-top: 10px;
+                position: relative;
+            }
+
+
+                .chat-wrapper .chat-message .chat-message-wrapper:before {
+                    content: " ";
+                    display: block;
+                    width: 0;
+                    height: 0;
+                    border: 12px solid transparent;
+                    top: 33px;
+                    position: absolute;
+                    z-index: 2;
+                }
+
+                .chat-wrapper .chat-message .chat-message-wrapper p {
+                    padding: 10px 20px;
+                    color: #fff;
+                    border-top: 1px solid;
+                }
+
+                    .chat-wrapper .chat-message .chat-message-wrapper p:first-of-type {
+                        border-top: 0 !important;
+                        border-radius: 4px;
+                    }
+
+            .chat-wrapper .chat-message.chat-message-recipient .chat-message-wrapper,
+            .chat-wrapper .chat-message.chat-message-recipient .chat-message-content {
+                float: left;
+            }
+
+                .chat-wrapper .chat-message.chat-message-recipient .chat-message-wrapper:before {
+                    left: -20px;
+                    border-right-color: #b4b5b6;
+                }
+
+            .chat-wrapper .chat-message.chat-message-recipient p {
+                margin: 0 0 10px;
+                background-color: #91D98A;
+                border-top-color: #91D98A;
+            }
+
+            .chat-wrapper .chat-message.chat-message-sender .chat-message-wrapper,
+            .chat-wrapper .chat-message.chat-message-sender .chat-message-content {
+                float: right;
+            }
+
+                .chat-wrapper .chat-message.chat-message-sender .chat-message-wrapper:before {
+                    right: -20px;
+                    border-left-color: #b4b5b6;
+                }
+
+            .chat-wrapper .chat-message.chat-message-sender p {
+                background: #8AC0D9;
+                border-top-color: #8AC0D9;
+            }
+
+
+
+            .chat-wrapper .chat-message .chat-message-content {
+                display: table;
+                overflow: hidden;
+                border-radius: 4px;
+            }
+                /*.chat-message .chat-message-sender {
+            border-radius: 4px !important;
+        }*/
+
+                .chat-wrapper .chat-message .chat-message-content:before {
+                    content: " ";
+                    display: block;
+                }
+
+            .chat-wrapper .chat-message .chat-details {
+                clear: both;
+                width: 100%;
+                display: table;
+                overflow: hidden;
+            }
+
+                .chat-wrapper .chat-message .chat-details:before {
+                    content: " ";
+                    display: block;
+                }
+
+                .chat-wrapper .chat-message .chat-details span {
+                    margin-right: 4px;
+                    color: #bbb;
+                }
+
+        #rounded-corners {
+            border-radius: 0 50% 50% 50% !important;
+        }
+
+        .own {
+            background: #b4b5b6 !important;
+        }
+
+        .tickets form {
+            width: 100%;
+        }
+    </style>
+
+    <div class="col-md-12">
+        <h2>Seguimiento Ticket # @Session["solicitud"] </h2>
+        <button type="button" id="add_button" data-toggle="modal" data-target="#userModal" class="btn btn-success">Editar</button>
+        <br />
+        <div id="userModal" class="modal fade">
+            <div class="modal-dialog">
+                @using (Html.BeginForm("VewEdit", "Engineering", FormMethod.Post, new { @id = "Form1" }))
+                {
+                    @Html.AntiForgeryToken()
+                    
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Editar</h4>
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+
+                        </div>
+
+                        <div class="modal-body">
+                            <input type="hidden" name="IdSolicitud" id="course" value='@Session["solicitud"]' class="form-control" /><br>
+                            <label>Estado</label>
+                            <br>
+                            <div class="form-group">
+
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.Estado, ViewBag.EstadoList as SelectList, Session["estatus"].ToString(), new { id = "dd_Activos", @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+                   
+                            <br>
+                            <br>
+                            <label>Responsable</label>
+                            <div class="form-group">
+
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.Responsable, ViewBag.RespList as SelectList, Session["responsabilidad"].ToString(), new { id = "dd_Activos", @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+                      
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="course_id" id="course_id" />
+                            <input type="hidden" name="operation" id="operation" />
+                            <input type="submit" name="action" id="action" class="btn btn-primary" value="Aceptar" />
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="row m-0 tickets">
+        <hr />
+
+        <div class="col-md-7" id="charts"></div>
+
+        <!-- En esta seccion se carga la descripcion de la solicitud-->
+        <div class="col-md-5" id="mensajes"></div>
+
+        <!-- Fin de la descripcion de las solicitudes-->
+        <!-- Se carga la seccion de comentarios-->
+        @using (Html.BeginForm("Create", "Mensajes", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="portlet-body">
+                <div class="panel-body">
+                    <hr />
+                    <br />
+                    <br />
+                    Solicitud # @Session["solicitud"]
+                    <br />
+                    <br />
+                    @Html.EditorFor(model => model.Id_Solicitud, new { htmlAttributes = new { @class = "form-control", @Value = Session["solicitud"], style = "display:none" } })
+                    @Html.ValidationMessageFor(model => model.Id_Solicitud, "", new { @class = "text-danger" })
+
+                    Usuario : @User.Identity.GetUserName()
+                    @Html.EditorFor(model => model.Email_user, new { htmlAttributes = new { @class = "form-control", @Value = @User.Identity.GetUserName(), style = "display:none" } })
+                    @Html.ValidationMessageFor(model => model.Email_user, "", new { @class = "text-danger" })
+                    <br />
+                    <br />
+                    Mensaje
+                    @Html.TextAreaFor(model => model.Mensaje)
+                    @Html.ValidationMessageFor(model => model.Mensaje)
+                    <form class="form-inline">
+
+                        <input type="submit" value="Create" class="btn btn-primary pull-right" />
+                    </form>
+                </div>
+            </div>
+
+            <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+
+
+            @Scripts.Render("~/bundles/jqueryval")
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
+            <script src="~/Scripts/froala_editor.min.js"></script>
+            <script src="~/Scripts/langs/fa.js"></script>
+            <script src="~/Scripts/plugins/block_styles.min.js"></script>
+            <script src="~/Scripts/plugins/colors.min.js"></script>
+            <script src="~/Scripts/plugins/file_upload.min.js"></script>
+            <script src="~/Scripts/plugins/font_family.min.js"></script>
+            <script src="~/Scripts/plugins/font_size.min.js"></script>
+            <script src="~/Scripts/plugins/lists.min.js"></script>
+            <script src="~/Scripts/plugins/media_manager.min.js"></script>
+            <script src="~/Scripts/plugins/tables.min.js"></script>
+            <script src="~/Scripts/plugins/video.min.js"></script>
+
+            <script>
+
+
+    $(document).ready(function () {
+
+        var levantamiento = "";
+        $.ajax({
+
+            url: '@System.Configuration.ConfigurationManager.AppSettings["Request"]/api/values?gard=' + @Session["solicitud"] + '',
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+
+                    var h5 = document.getElementById("charts");
+                    h5.innerHTML += '<p><b>Asunto: </b> ' + data[i].Asunto +
+                        '<b></br>Ubicacion: </b>' + data[i].Ubicacion +
+                        '<b></br>Departamento: </b> ' + data[i].Departamento +
+                        '<b></br>Correo: </b> ' + data[i].Correo +
+                        '<b></br>Activo: </b> ' + data[i].Activo +
+                        '<b></br>Subactivo: </b> ' + data[i].Subactivo +
+                        '<b></br>Estatus: </b> ' + data[i].Estatus +
+                        '<b></br>Responsable: </b> ' + data[i].Responsable
+                        switch (data[i].Categoria) {
+                            case 'BAJA':
+                                h5.innerHTML += '<b>SLA Bajo: </b> ' + data[i].SLA_C_B;
+                                break;
+                            case 'MEDIA':
+                                h5.innerHTML += '<b>SLA Medio: </b> ' + data[i].SLA_C_M;
+                                break;
+                            case 'ALTA':
+                                h5.innerHTML += '<b>SLA Alto: </b> ' + data[i].SLA_C_A;
+                                break;
+                            default: '';
+                    }
+
+                    h5.innerHTML += '<b></br>Descripcion: </b> ' + data[i].Descripcion;
+                    if(data[i].Conclusion == null)
+                    {
+                    h5.innerHTML += '<b></br>Conclusion de Cierre: </b> ' + "Este ticket aun no esta";
+                    }
+                    else{
+                    h5.innerHTML += '<b></br>Conclusion de Cierre: </b> ' + data[i].Conclusion;
+                    }
+                    h5.innerHTML += '</p><hr />';
+                }
+            }
+
+        });
+
+        //----Carga de mensajes
+        $.ajax({
+
+            url: '@System.Configuration.ConfigurationManager.AppSettings["Request"]/api/conversacion?gard='+@Session["solicitud"]+'',
+            success: function (data) {
+
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].Email_user == "@User.Identity.GetUserName().ToString()") {
+
+                        var h5 = document.getElementById("mensajes");
+                        if (data[i].ImagePath == null || data[i].ImagePath == "") {
+
+
+                            h5.innerHTML +=
+                                '<div class="chat-wrapper">' +
+                                '<div class="chat-message chat-message-recipient">' +
+                                '<img id="rounded-corners" title="' + data[i].Email_user + '"class="chat-image chat-image-default" src="' + data[i].ImagePathUser + '"/>' +
+                            '<div class="chat-message-wrapper"><div class="chat-message-content"><p class="own" style="font-style: italic"><b style="font-style:normal !important">'+data[i].NombreUsuario+' </b> '+data[i].Tcoment +'</p>'+ data[i].Mensaje + '</div></div>' +
+                                '<div class="chat-details">' +
+                                '</div></div></div></div>'
+                        }
+
+                        else {
+                            if (data[i].Mensaje == null) {
+
+                                h5.innerHTML +=
+                                    '<div class="chat-wrapper">' +
+                                    '<div class="chat-message chat-message-recipient">' +
+                                    '<img id="rounded-corners" title="' + data[i].Email_user +'"class="chat-image chat-image-default" src="' + data[i].ImagePathUser + '"/>' +
+                                    '<div class="chat-message-wrapper"><div class="chat-message-content"><div><img style="height: 30 %; width: 30 % "src="' + data[i].ImagePath + '"/></div></div>'+
+                                    '<div class="chat-details">' +
+                                    '</div></div></div></div>'
+
+                            }
+                            else {
+                                h5.innerHTML +=
+                                    '<div class="chat-wrapper">' +
+                                    '<div class="chat-message chat-message-recipient">' +
+                                    '<img id="rounded-corners" title="' + data[i].Email_user +'" class="chat-image chat-image-default" src="' + data[i].ImagePathUser +'"/>' +
+                                    '<div class="chat-message-wrapper"><div class="chat-message-content"><p>'+data[i].NombreUsuario+data[i].Tcoment +'</p><div>' + data[i].Mensaje + '<br><img width="80%" height="80%" src="' + data[i].ImagePath +'"/></div></div>' +
+                                    '<div class="chat-details">' +
+                                    '</div></div></div></div>'
+                            }
+
+                        }
+
+                    }
+                    else {
+
+                        var h5 = document.getElementById("mensajes");
+                        var user = data[i].Email_user;
+
+                        if (data[i].ImagePath == null || data[i].ImagePath == "") {
+                            h5.innerHTML +=
+                                "<div class='chat-wrapper'>" +
+                                "<div class='chat-message chat-message-sender'>" +
+                                "<img id='rounded-corners' title ='" + data[i].Email_user + "'style= 'float:right;'class='chat-image chat-image-default' src='" + data[i].ImagePathUser + "'/>" +
+                            '<div class="chat-message-wrapper"><div class="chat-message-srd"><p class="own" style="font-style: italic"><b style="font-style:normal !important">'+data[i].NombreUsuario+' </b> '+data[i].Tcoment +'</p><div>' + data[i].Mensaje + '</div>' +
+                                '<div class="chat-details">'+
+                                '</div></div></div></div>'
+                        }
+                        else {
+                            if (data[i].Mensaje == null) {
+
+                                h5.innerHTML +=
+                                    "<div class='chat-wrapper'>" +
+                                    "<div class='chat-message chat-message-sender'>" +
+                                    "<img id='rounded-corners' title ='" + data[i].Email_user + "'style= 'float:right;'class='chat-image chat-image-default' src='" + data[i].ImagePathUser + "'/>" +
+                                '<div class="chat-message-wrapper"><div class="chat-message-srd"><p class="own" style="font-style: italic"><b style="font-style:normal !important">'+data[i].NombreUsuario+' </b> '+data[i].Tcoment +'</p><img style="height: 30 %; width: 30 % "src="'+data[i].NombreUsuario + data[i].ImagePath + '"/></div></div>'+
+                                    '<div class="chat-details">' +
+                                    '</div></div></div></div>'
+                            }
+                            else {
+
+                                h5.innerHTML +=
+                                    "<div class='chat-wrapper'>" +
+                                    "<div class='chat-message chat-message-sender'>" +
+                                    "<img id='rounded-corners' title ='" + data[i].Email_user + "'style= 'float:right;'class='chat-image chat-image-default' src='" + data[i].ImagePathUser + "'/>" +
+                                "<div class='chat-message-wrapper'><p class='own' style='font-style: italic'><b style='font-style:normal !important'>'+data[i].NombreUsuario+' </b> '+data[i].Tcoment +'</p><div class='chat-message-srd'>" + data[i].Mensaje + "<br><img width='80%' height='80%' src='" +data[i].NombreUsuario+ data[i].ImagePath + "'/></div></div>"+
+                                    "<div class='chat-details'>"+
+                                    "</div></div></div></div>"
+                            }
+
+                        }
+
+                    }
+                }
+            }
+        });
+
+        function removeAllTagsAndTrim(html) {
+            return !html ? "" : jQuery.trim(html.replace(/(<([^>]+)>)/ig, ""));
+        }
+
+
+        jQuery.validator.setDefaults({ ignore: ":hidden:not(textarea)" });
+
+
+        jQuery.validator.methods.originalRequired = jQuery.validator.methods.required;
+
+        jQuery.validator.addMethod("required", function (value, element, param) {
+            value = removeAllTagsAndTrim(value);
+            if (!value) {
+                $(".froala-element").focus();
+                $(".froala-element").css({ "border-color": "red" });
+                return false;
+            }
+
+            return jQuery.validator.methods.originalRequired.call(this, value, element, param);
+        }, jQuery.validator.messages.required);
+            });
+
+            console.log("test");
+                    $('#Mensaje').editable({
+                buttons: ["bold", "italic", "underline", "strikeThrough", "fontFamily",
+                    "fontSize", "color", "formatBlock", "align", "insertOrderedList",
+                    "insertUnorderedList", "outdent", "indent", "selectAll", "createLink", "uploadFile",
+                    "insertImage", "insertVideo", "undo", "redo", "html", "save", "inserthorizontalrule"],
+                inlineMode: false,
+                inverseSkin: true,
+                preloaderSrc: '@Url.Content("~/Content/img/preloader.gif")',
+                allowedImageTypes: ["jpeg", "jpg", "png"],
+                height: 300,
+                language: "es",
+
+                fontList: ["Tahoma, Geneva", "Arial, Helvetica", "Impact, Charcoal"],
+                autosave: true,
+                autosaveInterval: 2500,
+                saveURL: '@Url.Action("FroalaAutoSave", "Engineering")',
+                saveParams: { postId: "123" },
+                spellcheck: true,
+                plainPaste: true,
+                imageButtons: ["removeImage", "replaceImage", "linkImage"],
+                borderColor: '#00008b',
+                imageUploadURL: '@Url.Action("FroalaUploadImage", "Engineering")',
+                imageParams: { postId: "123" },
+                enableScript: false,
+                fileUploadURL: '@Url.Action("FroalaUploadFile", "Engineering")',
+                        fileUploadParams: { postId: "123" }
+
+
+            });
+
+            </script>
+
+        }
+}

@@ -1,0 +1,82 @@
+﻿@using Microsoft.AspNet.Identity
+    @{
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+@section Section{
+
+     <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Agentes</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+             <table id="example"  class="table table-striped table-bordered table-hover dt-responsive" style="width:100%">
+    @*<button type="button" class="btn btn-default btn-sm" id="refresh_desk">
+            <span class="glyphicon glyphicon-refresh"></span> Refresh
+        </button>*@
+    <thead>
+        <tr>
+            <th>Agente</th>
+            <th>Tickets Asignados</th>
+            <th>Tickets Abiertos</th>
+            <th>Tickets Cerrados</th>
+            <th>Tickets Cerrados en SLA</th>
+            <th>Tickets Vencidos en SLA</th>
+            <th>Eficiencia</th>
+            <th>Perfil</th>
+        </tr>
+    </thead>
+</table>
+</div>
+</div>
+</div>
+<script>
+    $(document).ready(function () {
+
+            var table = $('#example').DataTable({
+
+                "ajax": {
+                    "url": "@System.Configuration.ConfigurationManager.AppSettings["Request"]/api/Agnom",
+
+                    "datatype": "json",
+                    "contentType": "application/json; charset=utf-8",
+
+                    "error": function (status) {
+                        console.log(status);
+                    }
+                },
+                "processing": true,
+                "dataSrc": "",
+                "columns": [
+ 
+                    { "data": "Agente" },
+                    { "data": "Tickets_Asignados" },
+                    { "data": "Tickets_Abiertos" },
+                    { "data": "Tickets_Cerrados" },
+                    { "data": "Tickets_Cerrados_en_SLA" },
+                    { "data": "Tickets_Vencido_en_SLA" },
+                     { "data": "Eficacia" },
+                      {
+                        "data": "URLImage",
+                        "render": function (dato, type, val) {
+                        return '<img width="100" height="100" src="'+dato+'">';
+                               
+                        },
+                    }
+                ],
+                "order": [[1, 'asc']],
+            });
+            $('#refresh_desk').click(function ()  {
+                table.ajax.reload();
+            });
+            
+        
+
+        $('.tablecontainer').on('click', 'a.popup', function (e) {
+            e.preventDefault();
+            OpenPopup($(this).attr('href'));
+        })
+    });
+</script>
+}

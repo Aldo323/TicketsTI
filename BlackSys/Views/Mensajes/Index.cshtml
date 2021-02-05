@@ -1,0 +1,52 @@
+﻿@model IEnumerable<BlackSys.Models.Mensajes>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id_Solicitud)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Mensaje)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email_user)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Timestamp)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id_Solicitud)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Mensaje)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email_user)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Timestamp)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id_Mensaje }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id_Mensaje }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id_Mensaje })
+        </td>
+    </tr>
+}
+
+</table>

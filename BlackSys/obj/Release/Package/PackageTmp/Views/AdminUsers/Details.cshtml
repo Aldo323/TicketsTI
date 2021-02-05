@@ -1,0 +1,90 @@
+﻿@model BlackSys.Models.ApplicationUser
+@{
+    ViewBag.Title = "Ver Detalles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h3 class="page-title">
+    Administracion de Usuarios
+    <small> Security</small>
+</h3>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-pin"></i>
+                    <span class="caption-subject bold">Detalles de Usuario:<strong> @Html.DisplayFor(model => model.UserName)</strong></span>
+                </div>
+                <div class="tools">                    
+                    <a class="collapse" href="javascript:;" data-original-title="" title=""> </a>                    
+                    <a class="fullscreen" href="javascript:;" data-original-title="" title=""> </a>                                      
+                </div>
+                <div class="actions">                    
+                    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-default" })
+                    
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="col-md-10">
+
+
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Id)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Id)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.UserName)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.UserName)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.DisplayAddress)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.DisplayAddress)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Email)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Email)
+                            </dd>
+
+                        </dl>
+                        <h4>Lista de Roles para este usuario</h4>
+                        @if (ViewBag.RoleNames.Count == 0)
+                        {
+                            <hr />
+                            <p>No hay Roles asignados a este Usuario</p>
+                        }
+                        <div class="col-md-4">
+                            <table class="table table-striped table-bordered table-hover">
+                                @foreach (var item in ViewBag.RoleNames)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

@@ -1,0 +1,46 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" />
+
+    
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+
+<body>
+
+    <form id="form1">  
+        <input id="numero">
+        <input type="button" id="Save" value="Crear"/>
+    </form>  
+
+    <script type="text/javascript">
+    $(document).ready(function () {  
+             $("#Save").click(function () {  
+                 var person = new Object();  
+
+                 person.cantidad = $('#numero').val();  
+                 
+                 $.ajax({  
+                     url: '@System.Configuration.ConfigurationManager.AppSettings["Request"]/QRC/Codigos',  
+                     type: 'POST',  
+                     dataType: 'json',  
+                     data: person,  
+                     success: function (data, textStatus, xhr) {  
+                        
+                     },  
+                     error: function (xhr, textStatus, errorThrown) {  
+                         console.log('Error in Operation');  
+                     }  
+                 });  
+             });  
+         });  
+    </script>
+</body>
+
+
+

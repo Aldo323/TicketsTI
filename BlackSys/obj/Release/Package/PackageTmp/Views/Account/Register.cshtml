@@ -1,0 +1,81 @@
+﻿@model BlackSys.Models.RegisterViewModel
+@{
+
+    ViewBag.Title = "Crear nueva cuenta";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.ParentController = "Account";
+    ViewBag.ParentAction = "Register";
+    ViewBag.ParentTitle = "Registrarse";
+
+}
+<head>
+    <meta charset="utf-8" />
+    <title>Login</title>
+
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    @Styles.Render("~/Content/font-awensome")
+    @Styles.Render("~/Content/simple-icons")
+    @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/uniform")
+    @Styles.Render("~/Content/bootstrap-switch")
+
+    <link href="~/Content/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/template/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="~/Content/template/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/login-3.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="favicon.ico" />
+</head>
+<div class="main">
+    <div class="container">
+
+        <div class="col-md-8 col-md-offset-2">
+            <h3>Registrarse</h3>
+
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Nombre, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ApellidoPat, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.ApellidoPat, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" class="btn btn-default" value="Registrarse" />
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

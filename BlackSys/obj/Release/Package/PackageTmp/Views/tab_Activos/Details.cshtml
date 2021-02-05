@@ -1,0 +1,123 @@
+﻿@model BlackSys.Models.tab_Activos
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tab_Activos</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Codigo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Codigo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.No_Categoria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.No_Categoria)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.idCategoria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.idCategoria)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Asignado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Asignado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Re_Asignable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Re_Asignable)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ubicado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ubicado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Marca)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Marca)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.No_Serial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.No_Serial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UsuarioAsig)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UsuarioAsig)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre_Activo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre_Activo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Modelo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Modelo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Caracteristicas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Caracteristicas)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdActivo }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

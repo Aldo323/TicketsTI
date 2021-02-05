@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNet.Identity
+    @{
+        ViewBag.Title = "Product";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+<style>
+    #poster {
+        font-family: Impact;
+        font-size: 14pt;
+        color: green;
+    }
+
+  
+</style>
+<div id="moto"></div>
+
+<script>
+    $(document).ready(function () {
+
+        $.ajax({
+            url: '@System.Configuration.ConfigurationManager.AppSettings["Request"]/api/NomAgentes',
+            success: function (data) {
+                //console.log(data.lst[1]);
+                var h5 = document.getElementById("moto");
+
+                data.lst.forEach(function (data) {
+                    console.log(data);
+                    h5.innerHTML += '<p><b>' + data +'</b></p>';
+                });
+                
+                
+            }
+        });
+
+
+    });
+
+
+</script>

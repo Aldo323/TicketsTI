@@ -1,0 +1,201 @@
+﻿@model BlackSys.Models.Component
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Component</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ComponentCategory.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ComponentCategory.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.CreatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer.CreatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Supplier.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Supplier.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UnitMeasure.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnitMeasure.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CountryOfOrigin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CountryOfOrigin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SupplierCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SupplierCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PurchasingPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PurchasingPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PurchasingTerms)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PurchasingTerms)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ListPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ListPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HtsID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HtsID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SacID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SacID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiscontinuedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiscontinuedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.rowguid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.rowguid)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

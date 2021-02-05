@@ -1,0 +1,51 @@
+﻿@model BlackSys.Models.Mensajes
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Mensajes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id_Solicitud)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id_Solicitud)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Mensaje)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mensaje)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email_user)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email_user)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Timestamp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Timestamp)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id_Mensaje }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

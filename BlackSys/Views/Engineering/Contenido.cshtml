@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Contenido";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Contenido</h2>
+
+<div id="charts">
+
+</div>
+<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+
+                url: '@System.Configuration.ConfigurationManager.AppSettings["Request"]/api/values?gard=1',
+                success: function (data) {
+                   for (var i = 0; i < data.length; i++) {
+
+                       var h5 = document.getElementById("charts");
+                       h5.innerHTML += '<p>' + data[i].Ubicacion; '</p>'
+                    }
+                }
+            });
+           // charts.innerHTML("aldo")
+
+        });
+
+
+    </script>

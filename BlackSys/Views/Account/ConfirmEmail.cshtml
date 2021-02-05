@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Confirm Email";
+    ViewBag.ParentController = "Account";
+    ViewBag.ParentAction = "Profile";
+    ViewBag.ParentTitle = "Mi Perfil";
+   // Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <meta charset="utf-8" />
+    <title>Login</title>
+
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    @Styles.Render("~/Content/font-awensome")
+    @Styles.Render("~/Content/simple-icons")
+    @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/uniform")
+    @Styles.Render("~/Content/bootstrap-switch")
+
+    <link href="~/Content/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/template/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="~/Content/template/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/login-3.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="favicon.ico" />
+</head>
+<h2>@ViewBag.Title.</h2>
+<div>
+    <p>
+        Thank you for confirming your email. Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+    </p>
+</div>

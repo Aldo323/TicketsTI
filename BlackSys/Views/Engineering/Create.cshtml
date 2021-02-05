@@ -1,0 +1,213 @@
+﻿@model BlackSys.Models.Solicitudes
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Section{
+    <h2>Nueva Solicitud</h2>
+
+    <link href="~/Content/froala_editor.css" rel="stylesheet" />
+    <link href="~/Content/froala_page.css" rel="stylesheet" />
+    <link href="~/Content/themes/dark.css" rel="stylesheet" />
+    <style type="text/css">
+
+        .froala-element {
+            font-size: 9pt;
+        }
+        .btn {
+            color: white;
+            background-color: #4e73df;
+        }
+    </style>
+    @using (Ajax.BeginForm(actionName: "Create",
+                           controllerName: "Engineering",
+                           ajaxOptions: new AjaxOptions { HttpMethod = "POST" },
+                           routeValues: null,
+                           htmlAttributes: new { id = "froalaForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Asunto, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Asunto, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                @Html.ValidationMessageFor(model => model.Asunto, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Activo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Activo, ViewBag.ActivoList as SelectList, "Select Activo", new { id = "dd_Activos", @class = "form-control", required = "required" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Subactivo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Subactivo, new SelectList(Enumerable.Empty<SelectListItem>(), "IdSubactivos", "Subactivo"), "Select a Subactivo", new { id = "ddSubactivo", htmlAttributes = new { @class = "form-control", required = "required" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ubicacion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Ubicacion, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                @Html.ValidationMessageFor(model => model.Ubicacion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Correo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "form-control", required = "required", @Value = @User.Identity.GetUserName(), @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Departamento, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Departamento, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                @Html.ValidationMessageFor(model => model.Departamento, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Descripcion)
+                @Html.ValidationMessageFor(model => model.Descripcion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+
+
+        <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+
+
+        @Scripts.Render("~/bundles/jqueryval")
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
+        <script src="~/Scripts/froala_editor.min.js"></script>
+        <script src="~/Scripts/langs/fa.js"></script>
+        <script src="~/Scripts/plugins/block_styles.min.js"></script>
+        <script src="~/Scripts/plugins/colors.min.js"></script>
+        <script src="~/Scripts/plugins/file_upload.min.js"></script>
+        <script src="~/Scripts/plugins/font_family.min.js"></script>
+        <script src="~/Scripts/plugins/font_size.min.js"></script>
+        <script src="~/Scripts/plugins/lists.min.js"></script>
+        <script src="~/Scripts/plugins/media_manager.min.js"></script>
+        <script src="~/Scripts/plugins/tables.min.js"></script>
+        <script src="~/Scripts/plugins/video.min.js"></script>
+
+ 
+
+            <script>
+        $(document).ready(function () {
+
+            $("#dd_Activos").change(function () {
+
+                var activoId = $(this).val();
+                var txt = $("#dd_Activo option:selected").text();
+
+                $.get("@System.Configuration.ConfigurationManager.AppSettings["Request"]/Engineering/LoadSubActivosByActivosId", { ActivoId: activoId, cn: "" },
+
+                    function (classesData) {
+                        var select = $("#ddSubactivo");
+                        select.empty();
+                        select.append($('<option/>', {
+                            value: 0,
+                            text: "Select a Subactivo"
+                        }));
+
+                        $.each(classesData, function (index, itemData) {
+                            select.append($('<option/>', {
+                                value: itemData.Value,
+                                text: itemData.Text
+                            }));
+                        });
+                    });
+            });
+
+
+                });
+
+                        function removeAllTagsAndTrim(html) {
+            return !html ? "" : jQuery.trim(html.replace(/(<([^>]+)>)/ig, ""));
+        }
+
+
+        jQuery.validator.setDefaults({ ignore: ":hidden:not(textarea)" });
+
+
+        jQuery.validator.methods.originalRequired = jQuery.validator.methods.required;
+
+        jQuery.validator.addMethod("required", function (value, element, param) {
+            value = removeAllTagsAndTrim(value);
+            if (!value) {
+                $(".froala-element").focus();
+                $(".froala-element").css({ "border-color": "red" });
+                return false;
+            }
+
+            return jQuery.validator.methods.originalRequired.call(this, value, element, param);
+        }, jQuery.validator.messages.required);
+
+
+            console.log("test");
+                $('#Descripcion').editable({
+                buttons: ["bold", "italic", "underline", "strikeThrough", "fontFamily",
+                    "fontSize", "color", "formatBlock", "align", "insertOrderedList",
+                    "insertUnorderedList", "outdent", "indent", "selectAll", "createLink", "uploadFile",
+                    "insertImage", "insertVideo", "undo", "redo", "html", "save", "inserthorizontalrule"],
+                inlineMode: false,
+                inverseSkin: true,
+                preloaderSrc: '@Url.Content("~/Content/img/preloader.gif")',
+                allowedImageTypes: ["jpeg", "jpg", "png"],
+                height: 300,
+                language: "es",
+
+                fontList: ["Tahoma, Geneva", "Arial, Helvetica", "Impact, Charcoal"],
+                autosave: true,
+                autosaveInterval: 2500,
+                saveURL: '@Url.Action("FroalaAutoSave", "Engineering")',
+                saveParams: { postId: "123" },
+                spellcheck: true,
+                plainPaste: true,
+                imageButtons: ["removeImage", "replaceImage", "linkImage"],
+                borderColor: '#00008b',
+                imageUploadURL: '@Url.Action("FroalaUploadImage", "Engineering")',
+                imageParams: { postId: "123" },
+                enableScript: false,
+                fileUploadURL: '@Url.Action("FroalaUploadFile", "Engineering")',
+                        fileUploadParams: { postId: "123" }
+
+
+            });
+
+        </script>
+    </div>
+
+       
+    }
+}

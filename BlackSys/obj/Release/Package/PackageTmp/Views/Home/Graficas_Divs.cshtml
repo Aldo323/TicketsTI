@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Graficas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="page-title">
+    Dashboard
+    <small>dashboard & statistics</small>
+</h3>
+<div class="row">
+
+
+
+    <div class="container">
+
+        <!-- DONUT CHART BLOCK -->
+        <div class="col-sm-3 col-lg-3">
+            <div class="dash-unit">
+                <center>
+                    <dtitle>SIN CATEGORIA</dtitle>
+                    <div id="load"></div>
+                    <div id="t_nc"></div>
+                </center>
+            </div>
+        </div>
+
+        <!-- DONUT CHART BLOCK -->
+        <div class="col-sm-3 col-lg-3">
+            <div class="dash-unit">
+                <center>
+                    <dtitle>ABIERTOS</dtitle>
+                    <div id="space"></div>
+                    <div id="t_a"></div>
+                </center>
+            </div>
+        </div>
+
+        <div class="col-sm-3 col-lg-3">
+            <div class="dash-unit">
+                <center>
+                    <dtitle>CERRADOS</dtitle>
+                    <div id="cerrados"></div>
+                    <div id="t_c"></div>
+                </center>
+            </div>
+        </div>
+
+
+
+        <script type="text/javascript" src="~/Scripts/assets/js/dash-charts.js"></script>
+        <script type="text/javascript" src="https://code.highcharts.com/highcharts.js"></script>
+
+    </div>
+</div>
